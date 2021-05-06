@@ -3,4 +3,4 @@ include: package:lint/analysis_options.yaml
 linter:
   rules:
     use_setters_to_change_properties: false
-    sort_pub_dependencies: true
+    sort_pub_dependencies: false
