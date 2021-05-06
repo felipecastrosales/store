@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Store',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff0077b6),
+        scaffoldBackgroundColor: const Color(0xff0077b6),
+        appBarTheme: const AppBarTheme(elevation: 0),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BaseScreen(),
     );
