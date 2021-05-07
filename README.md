@@ -1,6 +1,4 @@
-  <p align="center">
-      <img src="" width="100" alt="Logo Store"/>
-</p>
+<p align="center">In development 🚧</p>
 
 <h1 align="center">Store</h1>
 
@@ -30,10 +28,6 @@
 ---
 
 <h2 align="center">Preview 📱</h2>
-
-   <p align="center">
-      <img src="" width="400" alt="Store Demo">
-   </p>
 
    > * In development 🚧
 
@@ -111,7 +105,7 @@
 
    ---
 
-   >This project was developed with ❤️ by **[@Felipe Sales](https://www.linkedin.com/in/felipecastrosales/)**, with the instructor **[Daniel Ciolfi](https://linkedin.com/in/danielciolfi)**, in the course  **["Creating Android and iOS Apps with Flutter - Create 16 Apps"](https://www.udemy.com/course/lojaflutter/)** on **[Udemy](https://www.udemy.com/)**.<br>
+   >This project was developed with ❤️ by **[@Felipe Sales](https://www.linkedin.com/in/felipecastrosales/)**, with the instructor **[Daniel Ciolfi](https://linkedin.com/in/danielciolfi)**, in the course  **["Create a Complete Virtual Store | Android / iOS with Flutter | 2021"](https://www.udemy.com/course/lojaflutter/)** on **[Udemy](https://www.udemy.com/)**.<br>
    If it helped you, give ⭐, contribute, it will help me too 😉
 
 ---
