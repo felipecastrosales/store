@@ -1,4 +1,4 @@
-p align="center">In development 🚧</p>
+<p align="center">In development 🚧</p>
 
 <h1 align="center">Store</h1>
 
