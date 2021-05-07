@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../helpers/validators.dart';
+import '../../models/user.dart';
+import '../../models/user_manager.dart';
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,21 +20,27 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+          child: Form(
+            key: formKey,
             child: ListView(
+              padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               children: [
                 TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(hintText: 'E-mail'),
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
                   validator: (email) {
+                    if (!emailValid(email)) {
+                      return 'Invalid e-mail';
+                    }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
+                  controller: passController,
                   decoration: const InputDecoration(hintText: 'Password'),
                   autocorrect: false,
                   obscureText: true,
@@ -39,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {}, 
+                    onPressed: () {},
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     ),
@@ -50,12 +65,24 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 44,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (formKey.currentState.validate()) {
+                        context.read<UserManager>().signIn(
+                          User(
+                            email: emailController.text,
+                            password: passController.text
+                          )
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       onPrimary: Theme.of(context).primaryColor,
                       primary: Theme.of(context).primaryColor,
                     ),
-                    child: const Text('Enter', style: TextStyle(fontSize: 18)),
+                    child: const Text(
+                      'Enter',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 ),
               ],

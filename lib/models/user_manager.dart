@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,8 +12,8 @@ class UserManager {
       final AuthResult result = await auth.signInWithEmailAndPassword(
           email: user.email, password: user.password);
       print(result.user.uid);
-    } on PlatformException catch (e) {
+    } on PlatformException catch (e){
       print(e);
     }
   }
-}
+} 
