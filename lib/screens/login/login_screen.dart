@@ -24,81 +24,93 @@ class LoginScreen extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
             key: formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              children: [
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(hintText: 'E-mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  validator: (email) {
-                    if (!emailValid(email)) {
-                      return 'Invalid e-mail';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: passController,
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  autocorrect: false,
-                  obscureText: true,
-                  validator: (pass) {
-                    if (pass.isEmpty || pass.length < 6) {
-                      return 'Invalid Password';
-                    }
-                    return null;
-                  },
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Consumer<UserManager>(
+              builder: (_, userManager, child) {
+                return ListView(
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      enabled: !userManager.loading,
+                      decoration: const InputDecoration(hintText: 'E-mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
+                      validator: (email) {
+                        if (!emailValid(email)) {
+                          return 'Invalid e-mail';
+                        }
+                        return null;
+                      },
                     ),
-                    child: const Text('I forgot my password'),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 44,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState.validate()) {
-                        context.read<UserManager>().signIn(
-                          user: User(
-                            email: emailController.text,
-                            password: passController.text,
-                          ),
-                          onSuccess: () {
-                            debugPrint('Success');
-                          },
-                          onFail: (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Failed to Enter: $e'),
-                                backgroundColor: Colors.redAccent,
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: passController,
+                      enabled: !userManager.loading,
+                      decoration: const InputDecoration(hintText: 'Password'),
+                      autocorrect: false,
+                      obscureText: true,
+                      validator: (pass) {
+                        if (pass.isEmpty || pass.length < 6) {
+                          return 'Invalid Password';
+                        }
+                        return null;
+                      },
+                    ),
+                    child,
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 44,
+                      child: ElevatedButton(
+                        onPressed: userManager.loading ? null : () {
+                          if (formKey.currentState.validate()) {
+                            userManager.signIn(
+                              user: User(
+                                email: emailController.text,
+                                password: passController.text,
                               ),
+                              onSuccess: () {
+                                debugPrint('Success');
+                              },
+                              onFail: (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Failed to Enter: $e'),
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      onPrimary: Theme.of(context).primaryColor,
-                      primary: Theme.of(context).primaryColor,
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: (userManager.loading) 
+                            ? Theme.of(context).primaryColor.withAlpha(100)
+                            : Theme.of(context).primaryColor
+                        ),
+                        child: userManager.loading 
+                          ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.white),
+                          ) 
+                          : const Text(
+                            'Enter',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                      ),
                     ),
-                    child: const Text(
-                      'Enter',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
+                  ],
+                );
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   ),
+                  child: const Text('I forgot my password'),
                 ),
-              ],
+              ),
             ),
           ),
         ),
