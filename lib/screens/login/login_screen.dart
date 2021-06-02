@@ -18,6 +18,17 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Enter'),
         centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/signup');
+            },
+            child: const Text(
+              'Enter',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Card(
@@ -84,17 +95,18 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: (userManager.loading) 
+                          primary: (userManager.loading)
                             ? Theme.of(context).primaryColor.withAlpha(100)
                             : Theme.of(context).primaryColor
                         ),
-                        child: userManager.loading 
+                        child: userManager.loading
                           ? const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(Colors.white),
-                          ) 
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                          )
                           : const Text(
-                            'Enter',
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                              'Enter', 
+                              style: TextStyle(
+                                fontSize: 18, color: Colors.white),
                           ),
                       ),
                     ),
